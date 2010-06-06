@@ -1,0 +1,8 @@
+digraph {
+  browse -> checkout
+  checkout -> "update items (idempotent)" -> checkout
+  checkout -> complete
+  checkout -> rollback
+  rollback -> "rollback items (idempotent)" -> rollback
+  rollback -> browse
+}
