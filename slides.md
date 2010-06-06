@@ -26,14 +26,35 @@
 
 !SLIDE
 
-# Datamapper
+# Would ActiveRecord work?
 
- - Community
-   - Plugins
-   - Validations
- - Works well with weird datastores
- - Works well with traditional datastores
-   - That much easier to migrate, in either direction
+@@@ ruby
+    class Account < ActiveRecord::Base
+      named_scope :rich,
+        :conditions => 'balance >= 1000'
+      named_scope :poor,
+        :conditions => 'balance < 100'
+    end
+@@@
+
+!SLIDE
+
+# DataMapper
+
+@@@ ruby
+    class Account
+      include DataMapper::Resource
+      property :id, Serial
+      property :balance, Integer
+      
+      def self.rich
+        all(:balance.gte => 1000)
+      end
+      def self.poor
+        all(:balance.lte => 100)
+      end
+    end
+@@@
 
 !SLIDE
 
