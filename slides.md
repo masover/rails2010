@@ -62,9 +62,7 @@
 
 !SLIDE
 
-# Schemaless
-
-!SLIDE
+# Schemaless?
 
 @@@ ruby
     class User
@@ -92,9 +90,7 @@
 
 !SLIDE
 
-# Relationships (sort of)
-
-!SLIDE
+# Relationships
 
 @@@ ruby
     class User
@@ -107,3 +103,4 @@
 !SLIDE
 
 # Idempotence
+## Or, "Why can't I click submit more than once?"
