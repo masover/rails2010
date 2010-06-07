@@ -76,6 +76,8 @@
 !SLIDE
 
 @@@ ruby
+    require 'dm-appengine/is_entity'
+
     module DataMapper
       module AppEngineResource
         def self.included(klass)
@@ -84,6 +86,28 @@
             is :entity
           end
         end
+      end
+    end
+@@@
+
+!SLIDE
+
+@@@ ruby
+    class User
+      property :id, Key, :key => true
+      
+      property :ancestor, AncestorKey
+      undef_method :ancestor
+      undef_method :ancestor=
+      
+      belongs_to_entity :parent
+      
+      def parent_id
+        id.parent
+      end
+      
+      def descendants(type)
+        type.all(:ancestor => id)
       end
     end
 @@@
@@ -103,4 +127,116 @@
 !SLIDE
 
 # Idempotence
-## Or, "Why can't I click submit more than once?"
+## or, "Why can't I click submit more than once?"
+
+!SLIDE
+
+# Transactions
+ - Optimistic locking
+ - Atomic
+ - Only across entity-groups
+
+!SLIDE
+
+# Simple case is simple
+
+@@@ ruby
+    class Post
+      include DataMapper::AppEngineResource
+      property :hit_count, Integer,
+          :default => 0
+      
+      def hit!
+        transaction do
+          reload
+          self.hit_count += 1
+          save
+        end
+      end
+    end
+@@@
+
+!SLIDE
+
+# Entity-groups
+
+@@@ ruby
+    class User
+      include DataMapper::AppEngineResource
+      property :name, String
+      has_descendants :favorites
+      
+      def set_favorite! name, url
+        transaction do
+          reload
+          fave = self.favorites.first(:name => name)
+          current ||= Favorite.new(:id => {:parent_id => id})
+          current.url = url
+          current.save
+        end
+      end
+    end
+    
+    class Favorite
+      property :name, String
+      property :url, String
+    end
+@@@
+
+!SLIDE
+
+# Global transactions
+ - Don't do them!
+ - Really, you don't need them!
+ - They wouldn't scale anyway!
+## but sometimes...
+
+!SLIDE
+
+# Inventory tracking
+
+@@@ ruby
+    class Item
+      include Base
+  
+      property :name, String, :required => true
+      property :description, Text
+      property :stock, Integer, :default => 0
+      
+      has_descendants :item_transactions
+      ...
+    end
+    
+    class ItemTransaction
+      include Base
+  
+      property :count, Integer, :default => 1
+      property :updated_at, DateTime
+  
+      belongs_to_entity :cart
+    end
+@@@
+
+!SLIDE
+
+# Shopping Cart
+
+@@@ ruby
+    class Cart
+      include Base
+      
+      property :state, String, :default => 'browse'
+      property :updated_at, DateTime
+      
+      has_descendants :cart_items
+      ...
+    end
+    
+    class CartItem
+      include Base
+      
+      property :count, Integer, :default => 1
+  
+      belongs_to_entity :item
+    end
+@@@
