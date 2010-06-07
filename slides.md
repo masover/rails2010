@@ -240,3 +240,33 @@
       belongs_to_entity :item
     end
 @@@
+
+!SLIDE
+
+# Portability
+ - Bulk uploader and downloader
+ - Common APIs
+   - DataMapper
+   - Memcached
+ - Familiar structure
+   - queues
+   - cron jobs
+
+!SLIDE
+# Portability
+## Up to you how portable you are:
+<br />
+@@@ ruby
+    class User
+      property :id, Serial
+      property :name, String
+      property :email, String
+    end
+
+    User.create(:name => 'Nobody',
+                :email => 'nobody@example.com')
+
+    User.first(:email => 'nobody@example.com')
+
+    User.auto_migrate! # on sqlite3, MySQL, etc
+@@@
