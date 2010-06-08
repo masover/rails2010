@@ -1,0 +1,10 @@
+Railsconf 2010 dm-appengine presentation.
+
+To run:
+
+install pygments, and link pygmentize into /usr/local/bin
+
+gem install slidedown nokogiri makers-mark
+./slides.rb
+
+Then load http://localhost:4567/ with anything other than IE.
