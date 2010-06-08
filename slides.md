@@ -289,3 +289,10 @@
 
     User.auto_migrate! # on sqlite3, MySQL, etc
 @@@
+
+!SLIDE
+# Check it out!
+## [http://appengine-jruby.googlecode.com](http://appengine-jruby.googlecode.com)
+### [http://github.com/masover/rails2010](http://github.com/masover/rails2010)
+### [http://github.com/masover/cart](http://github.com/masover/cart)
+### [http://cart-demo.appspot.com/](http://cart-demo.appspot.com/)
