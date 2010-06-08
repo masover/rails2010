@@ -1,6 +1,7 @@
 !SLIDE
 
 # dm-appengine
+### slides: [http://rails2010-dm.appspot.com/](http://rails2010-dm.appspot.com/)
 
 !SLIDE
 
@@ -293,6 +294,7 @@
 !SLIDE
 # Check it out!
 ## [http://appengine-jruby.googlecode.com](http://appengine-jruby.googlecode.com)
+### [http://rails2010-dm.appspot.com/](http://rails2010-dm.appspot.com/)
 ### [http://github.com/masover/rails2010](http://github.com/masover/rails2010)
 ### [http://github.com/masover/cart](http://github.com/masover/cart)
 ### [http://cart-demo.appspot.com/](http://cart-demo.appspot.com/)
