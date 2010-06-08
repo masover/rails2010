@@ -26,6 +26,25 @@
 
 !SLIDE
 
+# DataMapper
+
+@@@ ruby
+    class User
+      property :id, Serial
+      property :name, String
+      property :email, String
+    end
+
+    User.create(:name => 'Nobody',
+                :email => 'nobody@example.com')
+
+    User.first(:email => 'nobody@example.com')
+
+    User.auto_migrate! # on sqlite3, MySQL, etc
+@@@
+
+!SLIDE
+
 # Would ActiveRecord work?
 
 @@@ ruby
